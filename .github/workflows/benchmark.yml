@@ -29,7 +29,7 @@ jobs:
       
       - name: Run Benchmark
         run: |
-          dotnet run -c Release --project LamGC.AES_XTS.Benchmarks
+          dotnet run -c Release --project LamGC.AES_XTS.Benchmarks --framework net10.0
       
       - name: Upload Report to Summary
         shell: bash
