@@ -6,14 +6,32 @@
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
 
-        <Version>0.1.0</Version>
+        <Version>0.1.0-beta.1</Version>
         <PackageId>LamGC.AES-XTS</PackageId>
         <Authors>LamGC</Authors>
-        <Description>A streaming AES-XTS encryption implementation for the BouncyCastle Lightweight Cryptography API.</Description>
+        <Description>A streaming AES-XTS encryption implementation.</Description>
 
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <RepositoryUrl>https://github.com/LamGC/AES-XTS.NET</RepositoryUrl>
         <PackageTags>crypto;aes;xts;</PackageTags>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
     </PropertyGroup>
+
+    <!-- 可重现构建所需配置. -->
+    <PropertyGroup>
+        <Deterministic>true</Deterministic>
+        <ContinuousIntegrationBuild Condition="'$(TF_BUILD)' == 'true' or '$(GITHUB_ACTIONS)' == 'true' or '$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\LICENSE" Pack="true" PackagePath="\"/>
+    </ItemGroup>
     
 </Project>
