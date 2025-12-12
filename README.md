@@ -10,6 +10,8 @@ A streaming AES-XTS encryption implementation.
   cases)
 - **Streaming Encryption** - Process data in chunks using `ProcessBytes`/`ProcessByte` methods, ideal for large files or
   network streams
+- **Cross-Sector Streaming** - A single cipher instance can seamlessly process data across multiple sectors with
+  automatic sector boundary handling, perfect for continuous data streams
 - **Comprehensive Test Suite** - Extensive unit tests covering lifecycle management, CTS (Ciphertext Stealing), boundary
   conditions, and round-trip verification
 - **Dual Operation Modes**:
