@@ -58,25 +58,22 @@ var parameters = new XtsAesCipherParameters(
     sectorIndex: 0                // Starting sector index
 );
 
-// Create and initialize cipher
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(forEncryption: true, parameters);
+// Create and initialize cipher for encryption
+using var encryptCipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 
 // Encrypt data
 byte[] plaintext = new byte[1024];
-byte[] ciphertext = cipher.DoFinal(plaintext);
+byte[] ciphertext = encryptCipher.DoFinal(plaintext);
 
-// Decrypt data
-cipher.Init(forEncryption: false, parameters);
-byte[] decrypted = cipher.DoFinal(ciphertext);
+// Create a new cipher instance for decryption
+using var decryptCipher = new XtsAesBufferedCipher(forEncryption: false, parameters);
+byte[] decrypted = decryptCipher.DoFinal(ciphertext);
 ```
 
 ### Streaming Encryption
 
 ```csharp
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(true, parameters);
-
+using var cipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 using var outputStream = new MemoryStream();
 
 // Process data in chunks
@@ -97,8 +94,7 @@ outputStream.Write(finalOutput);
 > significant number of objects internally. This issue will be addressed in future releases.
 
 ```csharp
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(true, parameters);
+using var cipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 
 byte[] input = new byte[4096];
 byte[] output = new byte[4096];

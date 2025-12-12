@@ -55,24 +55,21 @@ var parameters = new XtsAesCipherParameters(
 );
 
 // 创建并初始化加密器
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(forEncryption: true, parameters);
+using var encryptCipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 
 // 加密数据
 byte[] plaintext = new byte[1024];
-byte[] ciphertext = cipher.DoFinal(plaintext);
+byte[] ciphertext = encryptCipher.DoFinal(plaintext);
 
-// 解密数据
-cipher.Init(forEncryption: false, parameters);
-byte[] decrypted = cipher.DoFinal(ciphertext);
+// 创建新的加密器实例用于解密
+using var decryptCipher = new XtsAesBufferedCipher(forEncryption: false, parameters);
+byte[] decrypted = decryptCipher.DoFinal(ciphertext);
 ```
 
 ### 流式加密
 
 ```csharp
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(true, parameters);
-
+using var cipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 using var outputStream = new MemoryStream();
 
 // 分块处理数据
@@ -92,8 +89,7 @@ outputStream.Write(finalOutput);
 > **⚠️ 警告**：零分配功能尚未完全实现。底层 C# `Aes` 类内部仍会创建大量对象。该问题将在后续版本中修复。
 
 ```csharp
-using var cipher = new XtsAesBufferedCipher();
-cipher.Init(true, parameters);
+using var cipher = new XtsAesBufferedCipher(forEncryption: true, parameters);
 
 byte[] input = new byte[4096];
 byte[] output = new byte[4096];
